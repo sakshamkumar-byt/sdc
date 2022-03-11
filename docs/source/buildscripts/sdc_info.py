@@ -59,7 +59,7 @@ exclude_modules = [
     'sdc.hdict_ext',
     'sdc.distributed',
     'sdc.distributed_api',
-    'sdc.transport_seq',
+    'transport_seq',
     'sdc.distributed_lower',
     'sdc.hdist',
     'sdc.distributed_analysis',

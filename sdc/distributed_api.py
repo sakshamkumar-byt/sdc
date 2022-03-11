@@ -48,7 +48,7 @@ from sdc.str_arr_ext import (string_array_type, num_total_chars, StringArray,
                              get_data_ptr, convert_len_arr_to_offset)
 from sdc.utilities.utils import (debug_prints, empty_like_type, _numba_to_c_type_map, unliteral_all)
 
-from . import transport_seq as transport
+import transport_seq as transport
 
 
 ll.add_symbol('c_alltoall', transport.c_alltoall)

@@ -128,7 +128,7 @@ ext_io = Extension(name="hio",
                    language="c++"
                    )
 
-ext_transport_seq = Extension(name="sdc.transport_seq",
+ext_transport_seq = Extension(name="transport_seq",
                               sources=["sdc/transport/hpat_transport_single_process.cpp"],
                               depends=["sdc/_distributed.h"],
                               include_dirs=ind,

@@ -65,7 +65,7 @@ def _handle_np_fromfile(assign, lhs, rhs):
 
     # FIXME: import here since hio has hdf5 which might not be available
     import hio
-    from .. import transport_seq as transport
+    import transport_seq as transport
 
     import llvmlite.binding as ll
     ll.add_symbol('get_file_size', transport.get_file_size)
@@ -106,7 +106,7 @@ def get_dtype_size(typingctx, dtype=None):
 def tofile_overload(arr, fname):
     # FIXME: import here since hio has hdf5 which might not be available
     import hio
-    from .. import transport_seq as transport
+    import transport_seq as transport
 
     import llvmlite.binding as ll
     ll.add_symbol('file_write', hio.file_write)
