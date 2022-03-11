@@ -164,7 +164,7 @@ ext_set = Extension(name="hset_ext",
                     library_dirs=lid,
                     )
 
-ext_sort = Extension(name="sdc.concurrent_sort",
+ext_sort = Extension(name="concurrent_sort",
                      sources=[
                         "sdc/native/sort.cpp",
                         "sdc/native/stable_sort.cpp",

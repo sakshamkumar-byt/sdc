@@ -33,7 +33,7 @@ from numba import config
 import ctypes as ct
 import numpy
 
-from sdc import concurrent_sort
+import concurrent_sort
 
 
 def bind(sym, sig):
