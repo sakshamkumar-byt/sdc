@@ -138,7 +138,7 @@ ext_transport_seq = Extension(name="transport_seq",
                               language="c++"
                               )
 
-ext_hdist = Extension(name="sdc.hdist",
+ext_hdist = Extension(name="hdist",
                       sources=["sdc/_distributed.cpp"],
                       depends=["sdc/_hpat_common.h"],
                       extra_compile_args=eca,

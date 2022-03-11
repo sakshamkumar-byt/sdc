@@ -66,7 +66,7 @@ exclude_sdc_submodules = [
     'sdc.distributed_api',
     'transport_seq',
     'sdc.distributed_lower',
-    'sdc.hdist',
+    'hdist',
     'sdc.distributed_analysis',
     'hdatetime_ext',
     'sdc.io.csv_ext',

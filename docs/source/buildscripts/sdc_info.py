@@ -61,7 +61,7 @@ exclude_modules = [
     'sdc.distributed_api',
     'transport_seq',
     'sdc.distributed_lower',
-    'sdc.hdist',
+    'hdist',
     'sdc.distributed_analysis',
     'hdatetime_ext',
     'sdc.hiframes',
