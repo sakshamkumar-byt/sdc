@@ -42,7 +42,7 @@ import llvmlite.binding as ll
 
 from sdc.extensions.sdc_string_view_type import StdStringViewType
 from sdc import str_arr_ext
-from sdc import hstr_ext
+import hstr_ext
 from sdc.str_arr_ext import decode_utf8
 from sdc.extensions.sdc_hashmap_ext import load_native_func
 

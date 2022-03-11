@@ -32,7 +32,7 @@ import numpy as np
 import operator
 import sdc
 
-from sdc import hstr_ext
+import hstr_ext
 from glob import glob
 from llvmlite import ir as lir
 from numba import types

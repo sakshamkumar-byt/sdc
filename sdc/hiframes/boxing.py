@@ -50,7 +50,7 @@ from sdc.hiframes.pd_series_type import _get_series_array_type
 from sdc.hiframes.pd_dataframe_ext import get_structure_maps
 from sdc.utilities.sdc_typing_utils import sdc_pandas_index_types
 
-from .. import hstr_ext
+import hstr_ext
 import llvmlite.binding as ll
 from llvmlite import ir as lir
 from llvmlite.llvmpy.core import Type as LLType

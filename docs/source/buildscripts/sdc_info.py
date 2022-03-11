@@ -51,7 +51,7 @@ exclude_modules = [
     'sdc.io.pio_lower',
     'sdc.utilities.utils',
     'sdc.utilities.sdc_typing_utils',
-    'sdc.hstr_ext',
+    'hstr_ext',
     'sdc.datatypes.common_functions',
     'sdc.datatypes.hpat_pandas_dataframe_pass',
     'sdc.decorators',

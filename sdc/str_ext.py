@@ -43,7 +43,7 @@ from numba.core.typing.templates import (signature, AbstractTemplate, infer, inf
                                     ConcreteTemplate, AttributeTemplate, bound_function, infer_global)
 
 import sdc
-from sdc import hstr_ext
+import hstr_ext
 # from sdc.utilities.utils import unliteral_all
 # TODO: resolve import conflict
 

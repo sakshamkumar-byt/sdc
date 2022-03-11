@@ -200,7 +200,7 @@ ext_sort = Extension(name="sdc.concurrent_sort",
 str_libs = np_compile_args['libraries']
 numba_include_path = numba.extending.include_path()
 
-ext_str = Extension(name="sdc.hstr_ext",
+ext_str = Extension(name="hstr_ext",
                     sources=["sdc/_str_ext.cpp", ],
                     extra_compile_args=eca,
                     extra_link_args=ela,
