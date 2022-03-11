@@ -198,7 +198,7 @@ ext_str = Extension(name="hstr_ext",
                     library_dirs=np_compile_args['library_dirs'] + lid,
                     )
 
-ext_dt = Extension(name="sdc.hdatetime_ext",
+ext_dt = Extension(name="hdatetime_ext",
                    sources=["sdc/_datetime_ext.cpp"],
                    libraries=np_compile_args['libraries'],
                    define_macros=np_compile_args['define_macros'],

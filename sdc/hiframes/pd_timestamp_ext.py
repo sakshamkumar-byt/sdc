@@ -36,7 +36,7 @@ from llvmlite import ir as lir
 import pandas as pd
 
 import datetime
-from .. import hdatetime_ext
+import hdatetime_ext
 import llvmlite.binding as ll
 ll.add_symbol('parse_iso_8601_datetime', hdatetime_ext.parse_iso_8601_datetime)
 ll.add_symbol('convert_datetimestruct_to_datetime', hdatetime_ext.convert_datetimestruct_to_datetime)

@@ -63,7 +63,7 @@ exclude_modules = [
     'sdc.distributed_lower',
     'sdc.hdist',
     'sdc.distributed_analysis',
-    'sdc.hdatetime_ext',
+    'hdatetime_ext',
     'sdc.hiframes',
     'sdc.io.csv_ext',
     'sdc.hio',
