@@ -188,7 +188,7 @@ ext_sort = Extension(name="sdc.concurrent_sort",
 str_libs = np_compile_args['libraries']
 numba_include_path = numba.extending.include_path()
 
-ext_str = Extension(name="sdc.hstr_ext",
+ext_str = Extension(name="hstr_ext",
                     sources=["sdc/_str_ext.cpp"],
                     libraries=str_libs,
                     define_macros=np_compile_args['define_macros'],
@@ -352,8 +352,8 @@ class style(Command):
 sdc_build_commands = versioneer.get_cmdclass()
 sdc_build_commands['build_doc'] = SDCBuildDoc
 sdc_build_commands.update({'style': style})
-sdc_version = versioneer.get_version()
-sdc_release = 'Alpha ({})'.format(versioneer.get_version())
+sdc_version = '0.20.0'
+sdc_release = 'Alpha ({})'.format(sdc_version)
 
 setup(name=SDC_NAME_STR,
       version=sdc_version,
