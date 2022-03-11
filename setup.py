@@ -156,7 +156,7 @@ ext_chiframes = Extension(name="sdc.chiframes",
                           library_dirs=lid,
                           )
 
-ext_set = Extension(name="sdc.hset_ext",
+ext_set = Extension(name="hset_ext",
                     sources=["sdc/_set_ext.cpp"],
                     extra_compile_args=eca,
                     extra_link_args=ela,

@@ -45,7 +45,7 @@ from numba.core.typing.templates import signature, AbstractTemplate, infer, infe
 
 from llvmlite import ir as lir
 import llvmlite.binding as ll
-from . import hset_ext
+import hset_ext
 ll.add_symbol('init_set_string', hset_ext.init_set_string)
 ll.add_symbol('insert_set_string', hset_ext.insert_set_string)
 ll.add_symbol('len_set_string', hset_ext.len_set_string)
