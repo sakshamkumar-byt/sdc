@@ -1007,7 +1007,7 @@ class DistributedPassImpl(object):
             # nodes.append(print_node)
 
             # TODO: fix lazy IO load
-            from . import hio
+            import hio
             import llvmlite.binding as ll
             ll.add_symbol('file_write_parallel', hio.file_write_parallel)
             # HACK use the string in a dummy function to avoid refcount issues

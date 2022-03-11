@@ -29,7 +29,7 @@ import functools
 
 import llvmlite.binding as ll
 from llvmlite import ir as lir
-from .. import hio
+import hio
 from collections import defaultdict
 import numba
 from numba.core import typeinfer, ir, ir_utils, types

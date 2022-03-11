@@ -66,7 +66,7 @@ exclude_modules = [
     'hdatetime_ext',
     'sdc.hiframes',
     'sdc.io.csv_ext',
-    'sdc.hio',
+    'hio',
     'sdc.hiframes.join',
     'sdc.io.parquet_pio',
     'sdc.parquet_cpp',

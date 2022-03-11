@@ -70,7 +70,7 @@ exclude_sdc_submodules = [
     'sdc.distributed_analysis',
     'hdatetime_ext',
     'sdc.io.csv_ext',
-    'sdc.hio',
+    'hio',
     'sdc.hiframes.join',
     'sdc.io.parquet_pio',
     'sdc.parquet_cpp',

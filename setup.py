@@ -116,7 +116,7 @@ ela = ['-std=c++11', ]
 
 io_libs = []
 
-ext_io = Extension(name="sdc.hio",
+ext_io = Extension(name="hio",
                    sources=["sdc/io/_io.cpp"],
                    depends=["sdc/_hpat_common.h", "sdc/_distributed.h",
                             "sdc/_import_py.h",
