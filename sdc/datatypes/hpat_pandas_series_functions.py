@@ -80,6 +80,7 @@ from sdc.set_ext import build_set
 
 from .pandas_series_functions import apply
 from .pandas_series_functions import map as _map
+from .pandas_series_functions import transform
 
 
 @sdc_overload(operator.getitem)
