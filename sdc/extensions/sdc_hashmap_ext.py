@@ -46,7 +46,7 @@ from numba.core.typing.templates import (infer_global, AbstractTemplate, infer,
 from numba.typed.typedobjectutils import _as_bytes
 
 from sdc.str_arr_type import StringArrayType
-from sdc import hconc_dict
+import hconc_dict
 from sdc.extensions.sdc_hashmap_type import (ConcurrentDict, ConcurrentDictType,
                                              ConcDictKeysIterableType, ConcDictIteratorType,
                                              ConcDictItemsIterableType, ConcDictValuesIterableType)

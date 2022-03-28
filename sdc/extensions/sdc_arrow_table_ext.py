@@ -39,7 +39,7 @@ import llvmlite.binding as ll
 from llvmlite import ir as lir
 
 import sdc
-from sdc import harrow_reader
+import harrow_reader
 from sdc.utilities.utils import sdc_overload
 from sdc.utilities.prange_utils import parallel_chunks
 from sdc.extensions.sdc_arrow_table_type import ArrowTableType, PyarrowTableType

@@ -235,7 +235,7 @@ ext_parquet = Extension(name="sdc.parquet_cpp",
                         library_dirs=lid,
                         )
 
-ext_conc_dict = Extension(name="sdc.hconc_dict",
+ext_conc_dict = Extension(name="hconc_dict",
                           sources=[
                               "sdc/native/conc_dict_module.cpp",
                               "sdc/native/utils.cpp"],
@@ -257,7 +257,7 @@ ext_conc_dict = Extension(name="sdc.hconc_dict",
                           language="c++"
                           )
 
-ext_arrow_reader = Extension(name="sdc.harrow_reader",
+ext_arrow_reader = Extension(name="harrow_reader",
                              sources=["sdc/native/arrow_reader.cpp"],
                              extra_compile_args=eca,
                              extra_link_args=ela,
