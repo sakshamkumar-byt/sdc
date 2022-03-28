@@ -82,7 +82,7 @@ Building on Linux with setuptools
 
     export PYVER=<3.6 or 3.7>
     export NUMPYVER=<1.16 or 1.17>
-    conda create -n sdc-env -q -y -c intel/label/beta -c defaults -c intel -c conda-forge python=$PYVER numpy=$NUMPYVER tbb-devel tbb4py numba=0.52 pandas=1.2.0 pyarrow=2.0.0 gcc_linux-64 gxx_linux-64
+    conda create -n sdc-env -q -y -c intel/label/beta -c defaults -c intel -c conda-forge python=$PYVER numpy=$NUMPYVER tbb-devel tbb4py numba=0.54.1 pandas=1.3.4 pyarrow=4.0.1 gcc_linux-64 gxx_linux-64
     source activate sdc-env
     git clone https://github.com/IntelPython/sdc.git
     cd sdc
