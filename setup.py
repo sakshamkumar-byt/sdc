@@ -30,6 +30,7 @@ import platform
 import os
 import sys
 import numba
+import pyarrow as pa
 from docs.source.buildscripts.sdc_build_doc import SDCBuildDoc
 
 
@@ -48,6 +49,7 @@ SDC_NAME_STR = 'sdc'
 np_compile_args = np_misc.get_info('npymath')
 
 is_win = platform.system() == 'Windows'
+is_osx = platform.system() == 'Darwin'
 
 
 def readme():
@@ -108,11 +110,21 @@ def check_file_at_path(path2file):
 tbb_root = os.getenv('TBBROOT')
 if not tbb_root:
     tbb_root = check_file_at_path(['include', 'tbb', 'tbb.h'])
+    assert tbb_root, "TBB headers required to build SDC not found"
 
 ind = [PREFIX_DIR + '/include', ]
 lid = [PREFIX_DIR + '/lib', ]
-eca = ['-std=c++11', "-O3", "-DTBB_PREVIEW_WAITING_FOR_WORKERS=1"]  # '-g', '-O0']
-ela = ['-std=c++11', ]
+
+if is_win:
+    eca = ['/std:c++17', "/Ox", "/DTBB_PREVIEW_WAITING_FOR_WORKERS=1", ]  # "/Zi", "/Od", "/DEBUG:FULL"]
+    ela = []  # '/DEBUG:FULL', ]
+else:
+    eca = ['-std=c++17', "-O3", "-DTBB_PREVIEW_WAITING_FOR_WORKERS=1", ]  # '-g', '-O0']
+    ela = []
+
+    # On macOS, c++17 flag is ignored unless this flag is also passed to distutils
+    if is_osx:
+        eca += ["-fno-aligned-allocation"]
 
 io_libs = []
 
@@ -194,7 +206,9 @@ ext_str = Extension(name="hstr_ext",
                     define_macros=np_compile_args['define_macros'],
                     extra_compile_args=eca,
                     extra_link_args=ela,
-                    include_dirs=np_compile_args['include_dirs'] + ind + [numba_include_path],
+                    include_dirs=np_compile_args['include_dirs'] + ind + [
+                       "sdc/native/",
+                       numba_include_path],
                     library_dirs=np_compile_args['library_dirs'] + lid,
                     )
 
@@ -202,8 +216,8 @@ ext_dt = Extension(name="hdatetime_ext",
                    sources=["sdc/_datetime_ext.cpp"],
                    libraries=np_compile_args['libraries'],
                    define_macros=np_compile_args['define_macros'],
-                   extra_compile_args=['-std=c++11'],
-                   extra_link_args=['-std=c++11'],
+                   extra_compile_args=eca,
+                   extra_link_args=ela,
                    include_dirs=np_compile_args['include_dirs'],
                    library_dirs=np_compile_args['library_dirs'],
                    language="c++"
@@ -221,7 +235,43 @@ ext_parquet = Extension(name="sdc.parquet_cpp",
                         library_dirs=lid,
                         )
 
-_ext_mods = [ext_hdist, ext_chiframes, ext_set, ext_str, ext_dt, ext_io, ext_transport_seq, ext_sort]
+ext_conc_dict = Extension(name="sdc.hconc_dict",
+                          sources=[
+                              "sdc/native/conc_dict_module.cpp",
+                              "sdc/native/utils.cpp"],
+                          extra_compile_args=eca,
+                          extra_link_args=ela,
+                          libraries=['tbb'],
+                          include_dirs=[
+                              "sdc/native/",
+                              numba_include_path,
+                              os.path.join(tbb_root, 'include')],
+                          library_dirs=lid + [
+                              # for Linux
+                              os.path.join(tbb_root, 'lib', 'intel64', 'gcc4.4'),
+                              # for MacOS
+                              os.path.join(tbb_root, 'lib'),
+                              # for Windows
+                              os.path.join(tbb_root, 'lib', 'intel64', 'vc_mt'),
+                          ],
+                          language="c++"
+                          )
+
+ext_arrow_reader = Extension(name="sdc.harrow_reader",
+                             sources=["sdc/native/arrow_reader.cpp"],
+                             extra_compile_args=eca,
+                             extra_link_args=ela,
+                             libraries=pa.get_libraries(),
+                             include_dirs=[
+                                 "sdc/native/",
+                                 numba_include_path,
+                                 pa.get_include()],
+                             library_dirs=lid + pa.get_library_dirs(),
+                             language="c++"
+                             )
+
+_ext_mods = [ext_hdist, ext_chiframes, ext_set, ext_str, ext_dt, ext_io, ext_transport_seq, ext_sort,
+             ext_conc_dict, ext_arrow_reader, ]
 
 # Support of Parquet is disabled because HPAT pipeline does not work now
 # if _has_pyarrow:
@@ -359,8 +409,9 @@ setup(name=SDC_NAME_STR,
       version=sdc_version,
       description='Numba* extension for compiling Pandas* operations',
       long_description=readme(),
+      long_description_content_type='text/markdown',
       classifiers=[
-          "Development Status :: 2 - Pre-Alpha",
+          "Development Status :: 4 - Beta",
           "Intended Audience :: Developers",
           "Operating System :: POSIX :: Linux",
           "Programming Language :: Python",
@@ -370,14 +421,19 @@ setup(name=SDC_NAME_STR,
       ],
       keywords='data analytics distributed Pandas Numba',
       url='https://github.com/IntelPython/sdc',
+      license='BSD',
       author='Intel Corporation',
+      maintainer="Intel Corp.",
+      maintainer_email="scripting@intel.com",
+      platforms=["Windows", "Linux", "Mac OS-X"],
+      python_requires='>=3.6',
       packages=find_packages(),
       package_data={'sdc.tests': ['*.bz2'], },
       install_requires=[
           'numpy>=1.16',
-          'pandas>=1.2.0',
-          'pyarrow==2.0.0',
-          'numba>=0.52.0,<0.53',
+          'pandas==1.3.4',
+          'pyarrow==4.0.1',
+          'numba==0.54.1',
           'tbb'
           ],
       cmdclass=sdc_build_commands,

@@ -32,12 +32,13 @@ from numba import types
 from numba.core import cgutils
 from numba.np.numpy_support import from_dtype
 from numba.extending import (models, register_model, make_attribute_wrapper, lower_builtin)
-from numba.core.imputils import (impl_ret_new_ref, iternext_impl, RefType)
+from numba.core.imputils import (impl_ret_untracked, call_getiter, iternext_impl, RefType)
 from numba.np.arrayobj import make_array, _getitem_array_single_int
 
 from sdc.str_ext import string_type, list_string_array_type
 from sdc.str_arr_ext import (string_array_type, iternext_str_array, StringArrayType)
 from sdc.datatypes.categorical.types import CategoricalDtypeType, Categorical
+from sdc.datatypes.indexes.positional_index_type import PositionalIndexType
 
 
 class SeriesType(types.IterableType):
@@ -54,7 +55,7 @@ class SeriesType(types.IterableType):
                       if isinstance(dtype, types.Record) else dtype)
         self.data = data
         if index is None:
-            index = types.none
+            index = PositionalIndexType(False)
         self.index = index
         # keep is_named in type to enable boxing
         self.is_named = is_named
@@ -180,30 +181,10 @@ def getiter_series(context, builder, sig, args):
     :return: reference to iterator
     """
 
-    arraytype = sig.args[0].data
-
-    # Create instruction to get array to iterate
-    zero_member_pointer = context.get_constant(types.intp, 0)
-    zero_member = context.get_constant(types.int32, 0)
-    alloca = args[0].operands[0]
-    gep_result = builder.gep(alloca, [zero_member_pointer, zero_member])
-    array = builder.load(gep_result)
-
-    # TODO: call numba getiter with gep_result for array
-    iterobj = context.make_helper(builder, sig.return_type)
-    zero_index = context.get_constant(types.intp, 0)
-    indexptr = cgutils.alloca_once_value(builder, zero_index)
-
-    iterobj.index = indexptr
-    iterobj.array = array
-
-    if context.enable_nrt:
-        context.nrt.incref(builder, arraytype, array)
-
-    result = iterobj._getvalue()
-    # Note: a decref on the iterator will dereference all internal MemInfo*
-    out = impl_ret_new_ref(context, builder, sig.return_type, result)
-    return out
+    (value,) = args
+    series_obj = cgutils.create_struct_proxy(sig.args[0])(context, builder, value)
+    res = call_getiter(context, builder, sig.args[0].data, series_obj.data)
+    return impl_ret_untracked(context, builder, SeriesType, res)
 
 
 # TODO: call it from numba.np.arrayobj, need separate function in numba

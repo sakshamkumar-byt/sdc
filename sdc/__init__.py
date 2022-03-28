@@ -49,6 +49,9 @@ import sdc.datatypes.series.init
 
 import sdc.extensions.indexes.range_index_ext
 import sdc.extensions.indexes.int64_index_ext
+import sdc.extensions.indexes.multi_index_ext
+
+import sdc.extensions.sdc_hashmap_ext
 
 from ._version import get_versions
 
@@ -67,6 +70,7 @@ TODO: Needs to detect 'import Pandas' and align initialization according to it
 
 import sdc.rewrites.dataframe_constructor
 import sdc.rewrites.read_csv_consts
+import sdc.rewrites.dict_zip_tuples
 import sdc.rewrites.dataframe_getitem_attribute
 import sdc.datatypes.hpat_pandas_functions
 import sdc.datatypes.hpat_pandas_dataframe_functions

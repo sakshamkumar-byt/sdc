@@ -40,7 +40,7 @@ class RewriteReadCsv(Rewrite):
     Searches for calls to Pandas read_csv() and replace its arguments with tuples.
     """
 
-    _read_csv_const_args = ('names', 'dtype', 'usecols')
+    _read_csv_const_args = ('names', 'dtype', 'usecols', 'parse_dates')
 
     def match(self, func_ir, block, typemap, calltypes):
         # TODO: check that vars are used only in read_csv
@@ -63,7 +63,7 @@ class RewriteReadCsv(Rewrite):
                 if key in self._read_csv_const_args:
                     arg_def = guard(get_definition, func_ir, var)
                     ops = ['build_list', 'build_set', 'build_map']
-                    if arg_def.op in ops:
+                    if isinstance(arg_def, ir.Expr) and arg_def.op in ops:
                         args.append(arg_def)
 
         return len(args) > 0

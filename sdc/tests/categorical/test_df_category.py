@@ -26,6 +26,7 @@
 
 from sdc.tests.test_base import TestCase
 
+import unittest
 import numpy as np
 import pandas as pd
 import numba as nb
@@ -38,6 +39,7 @@ from sdc.types import (
 
 from sdc.hiframes.pd_dataframe_type import DataFrameType
 from sdc.tests.test_utils import skip_numba_jit
+from sdc.datatypes.indexes.positional_index_type import PositionalIndexType
 
 
 class DFCategoryTest(TestCase):
@@ -54,7 +56,7 @@ class DFCategoryTest(TestCase):
 
         assert(isinstance(nb_type, DataFrameType))
         assert(nb_type.columns == ('A',))
-        assert(nb_type.index == types.none)
+        assert(nb_type.index == PositionalIndexType(False))
         assert(nb_type.data[0].pd_dtype == CategoricalDtypeType(categories=[1, 2, 3], ordered=False))
         assert(nb_type.data[0] == Categorical(CategoricalDtypeType(categories=[1, 2, 3], ordered=False)))
 
@@ -122,3 +124,7 @@ class DFCategoryTest(TestCase):
 
         boxed = func()
         assert(boxed.equals(self._pd_value()))
+
+
+if __name__ == "__main__":
+    unittest.main()

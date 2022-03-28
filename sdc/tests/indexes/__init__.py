@@ -24,6 +24,9 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # *****************************************************************************
 
+from sdc.tests.indexes.test_empty_index import TestEmptyIndex
 from sdc.tests.indexes.test_range_index import TestRangeIndex
+from sdc.tests.indexes.test_positional_index import TestPositionalIndex
 from sdc.tests.indexes.test_int64_index import TestInt64Index
+from sdc.tests.indexes.test_multi_index import TestMultiIndex
 from sdc.tests.indexes.test_indexes import TestIndexes
